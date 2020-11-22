@@ -15,7 +15,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Test with Gradle
+      - uses: mstachniuk/ci-skip@v1
+      - name: Check if expression CI_SKIP and Test with Gradle
+        if: ${{ env.CI_SKIP == 'false' }}
         run: ./gradlew test
       - uses: actions/upload-artifact@v2
         if: always()
@@ -33,7 +35,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Check with Gradle
+      - uses: mstachniuk/ci-skip@v1
+      - name: Check if expression CI_SKIP and Check with Gradle
+        if: ${{ env.CI_SKIP == 'false' }}
         run: ./gradlew check
       - uses: actions/upload-artifact@v2
         if: always()
