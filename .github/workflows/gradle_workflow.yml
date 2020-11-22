@@ -38,6 +38,8 @@ jobs:
         with:
           java-version: 11
       - uses: mstachniuk/ci-skip@v1
+        with:
+          commit-filter: '[ci-skip]'
       - name: Check if expression CI_SKIP and Check with Gradle
         if: ${{ env.CI_SKIP == 'false' }}
         run: ./gradlew check
