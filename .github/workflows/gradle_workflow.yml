@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: my-artifact
+          name: tests-artifact
           path: build/reports
 
   Gradle_Check:
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: my-artifact-2
+          name: other-artifact
           path: |
             build/reports
             !build/reports/tests
