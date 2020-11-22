@@ -17,6 +17,11 @@ jobs:
           java-version: 11
       - name: Test with Gradle
         run: ./gradlew test
+      - uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: my-artifact
+          path: build/reports
 
   Gradle_Check:
     needs: [ Gradle_Test ]
@@ -30,3 +35,8 @@ jobs:
           java-version: 11
       - name: Check with Gradle
         run: ./gradlew check
+      - uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: my-artifact-2
+          path: build/reports
