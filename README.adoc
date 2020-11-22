@@ -1,0 +1,88 @@
+= Softwareentwicklung im Team: Praktische Übung 3
+:icons: font
+:icon-set: fa
+:experimental:
+:source-highlighter: rouge
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:stem: latexmath
+endif::[]
+
+== Vorbereitung 
+
+Die Vorbereitungsarbeiten müssen Sie *vor der praktischen Übung* abschließen. 
+
+Wir erwarten von Ihnen,
+
+* dass Sie verstanden haben, wie eine GitHub Action konfiguriert wird
+* dass Sie einen Gradle Build mit PMD und SpotBugs aufsetzen können
+* dass Sie verstanden haben, wie testgetriebene Entwicklung funktioniert
+* dass Sie sich Gedanken gemacht haben, wie Sie Game of Life testgetrieben entwickeln können 
+
+== Ziele der Übung
+
+Diese Übung dient dazu den Umgang mit Build-Automatisierung zu vertiefen. 
+
+== Ablauf der Übung
+
+. Schalten Sie *mindestens* das Mikrofon, aber besser auch die Kamera, ein 
+. Am Anfang gibt es eine kurze Vorstellungsrunde 
+. Es wird festgelegt, in welcher Reihenfolge die "Driver" Rolle übernommen wird
+. Die erste Person teilt Ihren Screen und übernimmt mithilfe von `mob` die Session
+. Es wird an der Problemstellung gemeinsam gearbeitet nach den Regeln des Mob Programmings 
+. Nach ca. der Hälfte der Zeit gibt es ein Feedback durch die Tutorin oder den Tutor
+. Es wird weiter an der Problemstellung gearbeitet
+. ca. 10 Minuten vor Ende der Session bekommen Sie Ihre Abschlussbewertung 
+
+NOTE: Diese praktische Übung wird für die Zulassung gewertet. Sie müssen vorbereitet sein und einen hinreichenden Beitrag leisten. 
+
+== Aufgabe 
+
+Wir wollen testgetrieben https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens[Game of Life] implementieren, aber dafür wollen wir zunächst einen automatisierten Buildprozess aufsetzen. In dem Repository ist bereits eine `build.gradle` Datei vorhanden, die für Tests vorbereitet ist. 
+
+== GitHub Action erstellen
+Diesen Teil sollten Sie im Browser auf der GitHub Webseite erledigen, *bevor* Sie eine Mob-Session starten, denn es ist leichter den eingebauten Editor zu verwenden, da es dort Code Completion und Fehlerchecks für die YAML Dateien gibt. 
+
+Erzeugen Sie eine GitHub Action, die auf `push` in allen Branches reagiert. Da das Ausführen der statischen Analysewerkzeuge länger dauert, wollen wir in zwei separaten Schritten zuerst die Unit-Tests mit `gradle test` und nur dann, wenn die Unit-Tests erfolgreich waren, die statischen Analysewerkzeuge mit `gradle check` ausführen.
+
+== Ein wenig Code schreiben
+Starten Sie die mob Session und schreiben Sie einen fehlschlagenden Test für Game of Life. Beenden Sie die mob Session und prüfen Sie, dass die GitHub Action den fehlschlagenden Test bemerkt und der Gradle `check` Task überspringen wurde. Starten Sie die mob Session neu und bringen Sie den Test zum Laufen. Prüfen Sie, dass der Gradle `check` Task nun ausgeführt wurde.
+
+== SpotBugs und PMD einschalten 
+Ändern Sie das Gradle Buildscript so, dass PMD und SpotBugs laufen. Von nun an sollten Sie während der Entwicklung auf dem eigenen Rechner immer `gradle check` verwenden und die von den Tools gemeldeten Probleme reparieren.
+
+NOTE: Bei der Konfiguration von PMD können Sie die Regel zur Dokumentation ausschalten. Es ist auch nicht unbedingt notwendig PMD auf den Tests laufen zu lassen. In der PMD Konfiguration können Sie die zu analysierenden Klassen mit `sourceSets = [sourceSets.main]` auf den Produktivcode einschränken. 
+
+== Reports festhalten
+Die Tests und Checks können zwar auf dem Buildserver fehlschlagen, aber die Reports werden auf dem Server nicht gespeichert. Verwenden Sie die https://github.com/actions/upload-artifact[Upload Artifact] Action, um den Inhalt des Verzeichnisses `build/reports` zu sichern. Prüfen Sie, dass der Report auf der Statusseite des Builds vorhanden ist, nachdem der Build gelaufen ist.
+
+== Nicht immer die Action ausführen
+Wir wollen nun die GitHub Action so modifizieren, dass die Tests und Checks nicht ausgeführt werden, wenn [ci-skip] in der Commitnachricht steht. Es gibt dafür eine https://github.com/marketplace/actions/ci-skip-action[Action im Marktplatz], mit der wir das (bei richtiger Konfiguration) umsetzen können. 
+
+Wenn Sie das korrekt umgesetzt haben, werden die Tests nicht ausgeführt, wenn Sie per `mob next` auf GitHub pushen. Der Workflow wird aber immer noch getriggert.
+
+NOTE: Wenn wir nur die Änderungen, die von mob gepusht werden ausschließen wollten, könnten wir natürlich auch einfach die Branches einschränken. Wir wollen hier aber ein wenig mit Actions experimentieren.
+
+== Game of Life 
+
+Nachdem wir nun den automatischen Build konfiguriert haben, kann es losgehen. Implementieren Sie Game of Life testgetrieben und sorgen Sie dafür das es keine SpotBugs oder PMD Warnungen gibt. 
+
+Game of life findet in einer zweidimensionalen Welt statt, die in Felder unterteilt ist. In jedem Feld kann eine Kreatur leben, oder das Feld kann leer sein. 
+
+Das Leben in der Welt wird in Runden/Generationen simuliert. Dabei gehorcht die Simulation folgenden 4 Regeln:
+
+. Eine Kreatur mit weniger als zwei Kreaturen auf Nachbarfeldern stirbt in der nächsten Runde.
+. Eine Kreatur mit mehr als drei Kreaturen auf Nachbarfeldern stirbt in der nächsten Runde.
+. Ein leeres Feld, das genau drei Kreaturen auf Nachbarfeldern hat, wird in der nächsten Runde mit einer Kreatur besetzt.
+. Kreaturen mit zwei oder drei Kreaturen auf Nachbarfeldern überlebt auch  in der nächsten Runde.
+
+Benutzen Sie Instanzmethoden, wo es möglich ist. 
+
+== Verhaltensregeln
+
+Wir erwarten von Ihnen einen respektvollen Umgang miteinander. Es gilt grundsätzlich bei uns der https://berlincodeofconduct.org/de/[Berlin Code of Conduct]. Die TutorInnen haben die Aufgabe, die Einhaltung der Regeln zu überwachen und können bei Verstößen gegen den Verhaltenskodex Personen aus der praktischen Übung entfernen.   
+
