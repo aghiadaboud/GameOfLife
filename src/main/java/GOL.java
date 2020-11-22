@@ -6,6 +6,6 @@ public class GOL {
 
 
   public String getClassName() {
-    return this.getClass().getName();
+    return this.getClass().getName() + "foo";
   }
 }
