@@ -1,4 +1,7 @@
 //@SuppressWarnings("checkstyle:abbreviationaswordinname")
+
+@SuppressWarnings({"PMD.ShortClassName", "PMD.AtLeastOneConstructor", "PMD.LoosePackageCoupling",
+    "PMD.NoPackage"})
 public class GOL {
 
 
