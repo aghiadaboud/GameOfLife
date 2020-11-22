@@ -18,6 +18,7 @@ jobs:
       - name: Test with Gradle
         run: ./gradlew test
       - uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: my-artifact
           path: build/reports
@@ -35,6 +36,7 @@ jobs:
       - name: Check with Gradle
         run: ./gradlew check
       - uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: my-artifact-2
           path: |
