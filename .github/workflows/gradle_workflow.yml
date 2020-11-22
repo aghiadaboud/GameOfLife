@@ -39,4 +39,6 @@ jobs:
         if: success()
         with:
           name: my-artifact-2
-          path: build/reports
+          path: |
+            build/reports
+            !build/reports/tests
