@@ -1,6 +1,5 @@
-import static org.assertj.core.api.Assertions.assertThat;
-
-
+import feld.Spielfeld;
+import genaration.NeueGenerationRechner;
 import org.junit.jupiter.api.Test;
 
 public class GOLTest {
@@ -8,13 +7,10 @@ public class GOLTest {
 
   @Test
   void methode1() {
-    GOL gol = new GOL();
-    assertThat(gol.getClassName()).isEqualTo("GOL");
+
+    Spielfeld spielfeld = new Spielfeld(10, 10);
+    var neueGenerationRechner = new NeueGenerationRechner();
+    GOL gol = new GOL(spielfeld, 1, neueGenerationRechner);
   }
 
-  @Test
-  void methode2() {
-    GOL gol = new GOL();
-    assertThat(gol.getClassNameLowerCase()).isEqualTo("gol");
-  }
 }
