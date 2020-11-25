@@ -1,3 +1,9 @@
+
+Gedanken: vielleicht ist es eine Gute Idee, hier Dependency Inversion(für Spielfeld) zu verwenden. Das würde uns mehr Kontrolle geben und das Testen einfacher
+          machen(zum Beispiel durch ein Fake Spielfeld). Die Entscheidung, wie das Spielfeld implementieret wird, sollte man in einer Kommponente verstecken und durch eine Schnitschtelle weiter kommunizieren.... denn für zukünftige Änderungen soll der Code wartbar sein(zum Beispiel Collections statt array für das Spielfeld).
+
+
+
 = Softwareentwicklung im Team: Praktische Übung 3
 :icons: font
 :icon-set: fa
